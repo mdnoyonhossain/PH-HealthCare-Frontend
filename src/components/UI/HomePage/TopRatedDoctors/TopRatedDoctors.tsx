@@ -2,6 +2,7 @@ import { Box, Button, Card, CardActions, CardContent, CardMedia, Container, Grid
 import Image from "next/image";
 import LocationOnIcon from '@mui/icons-material/LocationOn';
 import assets from "@/assets";
+import Link from "next/link";
 
 const TopRatedDoctors = async () => {
     const res = await fetch(`${process.env.NEXT_PUBLIC_BACKEND_API_URL}/doctor?page=1&limit=3`);
@@ -25,7 +26,18 @@ const TopRatedDoctors = async () => {
                     {doctors?.map((doctor: any) => (
                         <Grid item key={doctor.id} md={4}>
                             <Card>
-                                <Box>
+                                <Box
+                                    sx={{
+                                        width: "100%",
+                                        height: 300,
+                                        "& img": {
+                                            width: "100%",
+                                            height: "100%",
+                                            overflow: "hidden",
+                                            objectFit: "cover"
+                                        }
+                                    }}
+                                >
                                     <Image src={doctor?.profilePhoto ? doctor?.profilePhoto : assets.images.defaultDoctorImage} width={500} height={100} alt="doctor" />
                                 </Box>
                                 <CardContent>
@@ -48,7 +60,7 @@ const TopRatedDoctors = async () => {
                     ))}
                 </Grid>
                 <Box sx={{ textAlign: "center" }}>
-                    <Button variant="outlined" sx={{ marginTop: "40px" }}>View ALL Doctors</Button>
+                    <Button component={Link} href='/doctors' variant="outlined" sx={{ marginTop: "40px" }}>View ALL</Button>
                 </Box>
             </Container>
         </Box>
